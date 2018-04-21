@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "730199158293",
+    "firebase_url": "https://bitcoin-info-d7537.firebaseio.com",
+    "project_id": "bitcoin-info-d7537",
+    "storage_bucket": "bitcoin-info-d7537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730199158293:android:16a862b5e0d68917",
+        "android_client_info": {
+          "package_name": "com.example.joker.springlr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730199158293-3lmgielbjv3ds1i7tebmbvk48bqk06il.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.joker.springlr",
+            "certificate_hash": "40c3ffb8311b3bff13dd411174faddd36691305b"
+          }
+        },
+        {
+          "client_id": "730199158293-kim2caqgrs3et1ivs4a6j1e7p9ardau7.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "730199158293-bhbagqpvk3plku77rqrt60rs7mi65lob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDGG7KImc7csB22bVf4uFFat8gAradSCo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730199158293-kim2caqgrs3et1ivs4a6j1e7p9ardau7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
