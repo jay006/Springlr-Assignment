@@ -27,6 +27,9 @@ dependencies {
     //firebase auth UI
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
 
+    //firebase database
+    implementation 'com.google.firebase:firebase-database:15.0.0'
+
     //for facebook login
     implementation 'com.facebook.android:facebook-login:4.32.0'
 

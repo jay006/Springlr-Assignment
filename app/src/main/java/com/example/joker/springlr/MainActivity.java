@@ -16,6 +16,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
@@ -36,11 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private static String userName = "userName";
     private static String userEmail = "noEmail";
     private static String userImageUrl =  "noUrl";
+    private static String userId = "null";
 
     //Instances
     private CircleImageView profileImage;
     private TextView nameTextView;
     private TextView emailTextView;
+
+    private User userDetails;
+
+    private FirebaseDatabase database;
+    private DatabaseReference userReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        database = FirebaseDatabase.getInstance();
+        userReference = database.getReference("user");
 
         profileImage = findViewById(R.id.profile_image);
         nameTextView = findViewById(R.id.nameTextView);
@@ -64,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
                     userName = user.getDisplayName();
                     userEmail = user.getEmail();
                     userImageUrl = String.valueOf(user.getPhotoUrl());
+                    userId = user.getUid();
 
+                    userDetails = new User(userName,userEmail,userImageUrl,userId);
+
+                    //push data to database
+                    userReference.child(userId).setValue(userDetails);
 
                     //check whether user logged in using facebook or google.
                     for (UserInfo userInfo : user.getProviderData()) {
@@ -110,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(String provider) {
+
 
         if(provider.equals("fb")){
 
