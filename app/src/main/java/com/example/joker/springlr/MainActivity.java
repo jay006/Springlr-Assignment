@@ -7,14 +7,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.Arrays;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     //UserName
     private static String userName = "userName";
+    private static String userEmail = "noEmail";
+    private static String userImageUrl =  "noUrl";
+
+    //Instances
+    private CircleImageView profileImage;
+    private TextView nameTextView;
+    private TextView emailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        profileImage = findViewById(R.id.profile_image);
+        nameTextView = findViewById(R.id.nameTextView);
+        emailTextView = findViewById(R.id.emailTextView);
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -47,17 +62,31 @@ public class MainActivity extends AppCompatActivity {
                     //user signed in
 
                     userName = user.getDisplayName();
+                    userEmail = user.getEmail();
+                    userImageUrl = String.valueOf(user.getPhotoUrl());
+
 
                     //check whether user logged in using facebook or google.
                     for (UserInfo userInfo : user.getProviderData()) {
 
                         if (userInfo.getProviderId().equals("facebook.com")) {
                             //For linked facebook account
-                            Log.d("provider_info", "User is signed in with Facebook");
+                            Log.d("provider_Info", "User is signed in with Facebook");
+
+                            Log.d("userInfo",userName);
+                            Log.d("userInfo",userImageUrl);
+
+                            updateUI("fb");
 
                         } else if (userInfo.getProviderId().equals("google.com")) {
                             //For linked Google account
                             Log.d("provider_info", "User is signed in with Google");
+
+                            Log.d("userInfo",userName);
+                            Log.d("userInfo",userEmail);
+                            Log.d("userInfo",userImageUrl);
+
+                            updateUI("goo");
                         }
 
                     }
@@ -79,6 +108,35 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
+
+    private void updateUI(String provider) {
+
+        if(provider.equals("fb")){
+
+            emailTextView.setVisibility(View.GONE);
+
+            nameTextView.setText(userName);
+
+            Glide.with(MainActivity.this)
+                    .load(userImageUrl)
+                    .into(profileImage);
+
+        }else if (provider.equals("goo")){
+
+            emailTextView.setVisibility(View.VISIBLE);
+
+            nameTextView.setText(userName);
+            emailTextView.setText(userEmail);
+
+            Glide.with(MainActivity.this)
+                    .load(userImageUrl)
+                    .into(profileImage);
+
+        }
+
+
+    }
+
     //handling signIn cancelled on backPress.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(MainActivity.this, "SignedIn cancelled ", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }
 
